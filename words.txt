@@ -11,3 +11,10 @@ table
 chair
 book
 notebook
+stapler
+computer
+glasses
+pillow
+couch
+bread
+
