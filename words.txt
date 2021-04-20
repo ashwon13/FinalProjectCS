@@ -1,0 +1,13 @@
+50
+cake
+pie
+calculator
+pencil
+painting
+harmonica
+lamb
+desk
+table
+chair
+book
+notebook
