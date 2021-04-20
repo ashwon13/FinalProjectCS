@@ -4,12 +4,6 @@ pie
 calculator
 pencil
 painting
-harmonica
-lamb
-desk
-table
-chair
-book
 notebook
 stapler
 computer
@@ -17,4 +11,4 @@ glasses
 pillow
 couch
 bread
-
+academics
