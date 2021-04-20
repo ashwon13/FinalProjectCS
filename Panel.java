@@ -4,9 +4,24 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.*;
 
 public class Panel extends JPanel {
     public Panel() {
 
+    }
+
+    public String getWord() throws FileNotFoundException {
+        String[] words = new String[855];
+
+        File file = new File("words.txt");
+        Scanner scan = new Scanner(file);
+        for (int i=0;scan.hasNextLine();i++) {
+            words[i] = scan.next();
+        }
+        scan.close();
+        return words[(int)(Math.random()*855)];
     }
 }
