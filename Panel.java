@@ -12,7 +12,9 @@ public class Panel extends JPanel {
     public Panel() {
         setLayout(new BorderLayout()); // Setting layout to BorderLayout
 
-        
+        String word = getWord();
+
+        JLabel dashes = new JLabel("-"*word.length)
     }
 
     public String getWord() throws FileNotFoundException {
