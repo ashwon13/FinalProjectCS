@@ -10,7 +10,9 @@ import java.util.*;
 
 public class Panel extends JPanel {
     public Panel() {
+        setLayout(new BorderLayout()); // Setting layout to BorderLayout
 
+        
     }
 
     public String getWord() throws FileNotFoundException {
