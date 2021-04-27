@@ -17,7 +17,7 @@ public class Panel extends JPanel {
 
     public String getWord() throws FileNotFoundException {
         String[] words = new String[855];
-	String x="Hello;//this is a test
+	String x="Hello"; //this is a test
         File file = new File("words.txt");
         Scanner scan = new Scanner(file);
         for (int i=0;scan.hasNextLine();i++) {
