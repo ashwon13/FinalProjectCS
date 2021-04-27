@@ -14,7 +14,7 @@ public class Panel extends JPanel {
 
         String word = getWord();
 
-        JLabel dashes = new JLabel("-"*word.length)
+        JLabel dashes = new JLabel("-"*word.length);
     }
 
     public String getWord() throws FileNotFoundException {
