@@ -11,7 +11,8 @@ import java.util.*;
 public class Panel extends JPanel {
     String word;
     public Panel() {
-        setLayout(new BorderLayout()); // Setting layout to BorderLayout
+        
+        setLayout(new BorderLayout(0,0)); // Setting layout to BorderLayout
         
         try { word = getWord(); }
         catch (FileNotFoundException e) {System.out.println(2);}
@@ -19,8 +20,18 @@ public class Panel extends JPanel {
 
         JLabel dashes = new JLabel(repeat("_ ",word.length()));
         dashes.setFont(new Font("Serif", Font.PLAIN, 50));
-        dashes.setHorizontalAlignment(JLabel.CENTER);
+        //dashes.setHorizontalAlignment(JLabel.CENTER);
         add(dashes, BorderLayout.CENTER);
+
+        JLabel enter = new JLabel("Guess Letter:");
+        enter.setFont(new Font("Serif", Font.PLAIN, 25));
+        JTextField guess = new JTextField(5);
+        JPanel pane = new JPanel(new FlowLayout());
+        guess.setFont(new Font("Serif", Font.PLAIN, 25));
+        pane.add(enter);
+        pane.add(guess);
+        add(pane, BorderLayout.LINE_START);
+        
     }
     private String repeat(String ch, int len) {
         String fin = "";
