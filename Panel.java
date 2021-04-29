@@ -1,35 +1,57 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.*;
+import java.awt.Image;
+import javax.imageio.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 public class Panel extends JPanel {
-<<<<<<< HEAD
-    String word;
-    public Panel() {
-        
+    private String word, letter, dashStr;
+    private String usedLettsStr = "";
+    private JLabel dashes, picLabel, usedLetts;
+    private JTextField guess;
+    private BufferedImage hangMan;
+    private int phase=0;
+
+    public Panel() throws IOException {
         setLayout(new BorderLayout(0,0)); // Setting layout to BorderLayout
         
-        try { word = getWord(); }
-        catch (FileNotFoundException e) {System.out.println(2);}
+        try { word = chooseWord(); }
+        catch (FileNotFoundException e) {System.out.println();}
         
-
-        JLabel dashes = new JLabel(repeat("_ ",word.length()));
+        dashes = new JLabel(repeat("_ ",word.length()));
         dashes.setFont(new Font("Serif", Font.PLAIN, 50));
-        //dashes.setHorizontalAlignment(JLabel.CENTER);
         add(dashes, BorderLayout.CENTER);
 
-        JLabel enter = new JLabel("Guess Letter:");
-        enter.setFont(new Font("Serif", Font.PLAIN, 25));
-        JTextField guess = new JTextField(5);
-        JPanel pane = new JPanel(new FlowLayout());
+        JPanel hangPane = new JPanel(new BorderLayout());
+        JPanel miniPane = new JPanel(new FlowLayout());
+
+        JLabel text = new JLabel("Guess Letter:");
+        text.setFont(new Font("Serif", Font.PLAIN, 25));
+        miniPane.add(text);
+
+        guess = new JTextField(5);
         guess.setFont(new Font("Serif", Font.PLAIN, 25));
-        pane.add(enter);
-        pane.add(guess);
-        add(pane, BorderLayout.LINE_START);
-        
+        miniPane.add(guess);
+
+        JButton enter = new JButton("Guess!");
+        enter.addActionListener( new Listener());
+        miniPane.add(enter);
+
+        hangMan = ImageIO.read(new File("hangman/0.jpg"));
+        picLabel = new JLabel(new ImageIcon(hangMan));
+        hangPane.add(picLabel, BorderLayout.LINE_START);
+
+        usedLetts = new JLabel("Used Letters: ");
+        usedLetts.setFont(new Font("Serif", Font.PLAIN, 25));
+        hangPane.add(usedLetts, BorderLayout.PAGE_END);
+
+        hangPane.add(miniPane, BorderLayout.PAGE_START);
+        add(hangPane, BorderLayout.LINE_START);
     }
     private String repeat(String ch, int len) {
         String fin = "";
@@ -37,78 +59,78 @@ public class Panel extends JPanel {
             fin = fin+ch;
         return fin;
     }
-    public String getWord() throws FileNotFoundException {
-        String[] words = new String[855];
+    private String chooseWord() throws FileNotFoundException {
+        String[] words = new String[851];
         File file = new File("words.txt");
         Scanner scan = new Scanner(file);
-        for (int i=0;scan.hasNextLine();i++) {
+        for (int i=0;scan.hasNextLine() && i<851;i++) {
             words[i] = scan.nextLine();
         }
         scan.close();
-        return words[(int)(Math.random()*855)];
+        return words[(int)(Math.random()*850)];
     }
-=======
-   String word;
-   private JTextField[] input;
-   private JLabel[] inputLabel;
-   String k;
-   public Panel() {
-      setLayout(new BorderLayout()); // Setting layout to BorderLayout
-      
-      try { word = getWord(); }
-      catch (FileNotFoundException e) {System.out.println(2);}
-      
-   
-      JLabel dashes = new JLabel(repeat("_ ",word.length()));
-      dashes.setFont(new Font("Serif", Font.PLAIN, 50));
-      dashes.setHorizontalAlignment(JLabel.CENTER);
-      add(dashes, BorderLayout.CENTER);
-      setLayout(new GridLayout(1,1));
-      inputLabel=new JLabel[1];
-      for(int i=0;i<inputLabel.length;i++)
-      {
-         inputLabel[i]=new JLabel("Enter you guess here");
-         add(inputLabel[i]);
-      
-      }
-      
-      input=new JTextField[1];
-   
-      for(int x=0; x< input.length;x++)
-      {
-         input[x]=new JTextField();
-         add(input[x]);
-      
-      }
-   
-   
-   
-   
-      JLabel label1 = new JLabel( "1", JLabel.CENTER );
-      label1.setHorizontalTextPosition(JLabel.CENTER);
-           
-   }
-
-       
-   
-   private String repeat(String ch, int len) {
-      String fin = "";
-      for (int i=0;i<len;i++)
-         fin = fin+ch;
-      return fin;
-   }
-   public String getWord() throws FileNotFoundException {
-      String[] words = new String[855];
-      File file = new File("words.txt");
-      Scanner scan = new Scanner(file);
-      for (int i=0;scan.hasNextLine();i++) {
-         words[i] = scan.nextLine();
-      }
-      scan.close();
-      return words[(int)(Math.random()*855)];
-   }
-   
->>>>>>> 538b911ff5c4442349d661b65fc8c5e3ed070dfb
+    private boolean isCorrectGuess(String lettGuess, String[] d) {
+        boolean rVal = false;
+        for (int i=0;i<word.length();i++) {
+            if (word.charAt(i)==lettGuess.charAt(0)) {
+                d[i]=lettGuess;
+                rVal=true;
+            }
+        }
+        return rVal;
+    }
+    private void endScreen(String winOrLose) throws IOException {
+        String[] buttons = {"Restart", "Quit"};
+        JPanel endPane = new JPanel();
+        if (winOrLose.equals("You Lost!!!"))
+            endPane.add(new JLabel(winOrLose+"\nThe word was "+word));
+        else
+            endPane.add(new JLabel(winOrLose));
+        int result = JOptionPane.showOptionDialog(null, endPane, "End Game Message", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, buttons, null);
+        if (result == JOptionPane.YES_OPTION) {
+            usedLettsStr = "";
+            phase = 0;
+            word = chooseWord();
+            hangMan = ImageIO.read(new File("hangman/"+phase+".jpg"));
+            picLabel.setIcon(new ImageIcon(hangMan));
+            usedLetts.setText("Used Letters: "+usedLettsStr);
+            guess.setText("");
+            dashes.setText(repeat("_ ",word.length()));
+        }
+        if (result == JOptionPane.NO_OPTION) {
+            System.exit(0);
+        }
+    }
+    private class Listener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            String labelFin = "";
+            letter = guess.getText();
+            dashStr = dashes.getText();
+            String[] dash = dashStr.split(" ");
+            if (!isCorrectGuess(letter, dash)) {
+                phase++;
+                try { hangMan = ImageIO.read(new File("hangman/"+phase+".jpg")); }
+                catch (IOException f) { System.out.println(); }
+                picLabel.setIcon(new ImageIcon(hangMan));
+                usedLettsStr += letter;
+                usedLetts.setText("Used Letters: "+usedLettsStr);
+                try { if (phase>=10) {endScreen("You Lost!!!");} }
+                catch (IOException z) {System.out.println();}
+            }
+            else {
+                for (int i=0;i<dash.length;i++) {
+                    dash[i] += " ";
+                    labelFin += dash[i];
+                }
+                dashes.setText(labelFin);
+                try {
+                if (labelFin.indexOf("_")==-1)
+                    endScreen("Congrats You Won!!!");
+                } catch (IOException w) {System.out.println();}
+            }
+            
+        }
+    }
 }
 
 

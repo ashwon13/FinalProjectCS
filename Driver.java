@@ -1,12 +1,13 @@
 /**
  * Names: Pranav Velleleth, Ashwin Pulla, Vaibhav Vasudevan
  */
-//test
+import java.io.IOException;
+
 import javax.swing.JFrame;
 
 public class Driver {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		JFrame frame = new JFrame("Hangman Game");
 		frame.setSize(900, 600);
