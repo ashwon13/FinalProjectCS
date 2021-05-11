@@ -69,12 +69,15 @@ public class Panel extends JPanel {
         scan.close();
         return words[(int)(Math.random()*850)];
     }
-    private boolean isCorrectGuess(String lettGuess, String[] d) {
-        boolean rVal = false;
+    private int isCorrectGuess(String lettGuess, String[] d) {
+        int rVal = 0;
+        if (lettGuess.length()==0 || lettGuess.length()>1 || !lettGuess.matches("[a-z]+")) {
+            return -1;
+        }
         for (int i=0;i<word.length();i++) {
             if (word.charAt(i)==lettGuess.charAt(0)) {
                 d[i]=lettGuess;
-                rVal=true;
+                rVal=1;
             }
         }
         return rVal;
@@ -107,7 +110,7 @@ public class Panel extends JPanel {
             letter = guess.getText();
             dashStr = dashes.getText();
             String[] dash = dashStr.split(" ");
-            if (!isCorrectGuess(letter, dash)) {
+            if (isCorrectGuess(letter, dash)==0) {
                 phase++;
                 try { hangMan = ImageIO.read(new File("hangman/"+phase+".jpg")); }
                 catch (IOException f) { System.out.println(); }
@@ -117,7 +120,7 @@ public class Panel extends JPanel {
                 try { if (phase>=10) {endScreen("You Lost!!!");} }
                 catch (IOException z) {System.out.println();}
             }
-            else {
+            else if (isCorrectGuess(letter, dash)==1) {
                 for (int i=0;i<dash.length;i++) {
                     dash[i] += " ";
                     labelFin += dash[i];
@@ -128,7 +131,9 @@ public class Panel extends JPanel {
                     endScreen("Congrats You Won!!!");
                 } catch (IOException w) {System.out.println();}
             }
-            
+            else {
+                JOptionPane.showMessageDialog(null, "Your guess should be ONE LOWERCASE LETTER", "Guess Error", 0);
+            }
         }
     }
 }
