@@ -20,6 +20,8 @@ public class Panel extends JPanel {
     public Panel() throws IOException {
         setLayout(new BorderLayout(0,0)); // Setting layout to BorderLayout
         
+        setBackground(new Color(255, 204, 153));
+
         try { word = chooseWord(); }
         catch (FileNotFoundException e) {System.out.println();}
         
@@ -28,8 +30,10 @@ public class Panel extends JPanel {
         add(dashes, BorderLayout.CENTER);
 
         JPanel hangPane = new JPanel(new BorderLayout());
+        hangPane.setBackground(new Color(255, 204, 153));
         JPanel miniPane = new JPanel(new FlowLayout());
-
+        miniPane.setBackground(new Color(255, 204, 153));
+        
         JLabel text = new JLabel("Guess Letter:");
         text.setFont(new Font("Serif", Font.PLAIN, 25));
         miniPane.add(text);
