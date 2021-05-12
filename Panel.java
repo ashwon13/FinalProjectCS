@@ -76,15 +76,26 @@ public class Panel extends JPanel {
     }
     private int isCorrectGuess(String lettGuess, String[] d) {//sets up method that return an int and takes in a string called letterGuess and a string list called d
         int rVal = 0;//sets return val to 0
+        String used=usedLetts.getText();//gets used letters
+        used = used.substring(used.lastIndexOf(":") + 1);//filters out the "Used Letters: " and only keeps the used letters
+        
         if (lettGuess.length()==0 || lettGuess.length()>1 || !lettGuess.matches("[a-z]+")) {//if the letter guess lenght is = o or is greater than one or is not a letter in the alphabet
             return -1;//return -1
         }
+        else if(used.contains(lettGuess)==true)//if the letter guess is in the used letters
+        {
+            
+            return -2;//return -2
+            
+        
+        } 
         for (int i=0;i<word.length();i++) {//for i =0, loop until i is greater than the word length; i increases by 1 each loop
             if (word.charAt(i)==lettGuess.charAt(0)) { // if letter is in the word[i]  
                 d[i]=lettGuess; //then d[i]=letter guess
                 rVal=1;//return equals of 1
             }
         }
+        guess.setText("");//set the textbox to empty so that it's easier for user to type new letter
         return rVal; //return rval
     }
     private void endScreen(String winOrLose) throws IOException {//end screen 
@@ -111,7 +122,7 @@ public class Panel extends JPanel {
     }
     private class Listener implements ActionListener {//setting up class for action listener for guess button
         public void actionPerformed(ActionEvent e) {//setting up method for action listener for guess button
-
+            
             String labelFin = "";//setting up labelFin as ""
             letter = guess.getText();//setting letter as result from guess.getText()
             dashStr = dashes.getText();//setting dashStr as result from dashes.getText()
@@ -139,9 +150,13 @@ public class Panel extends JPanel {
                     endScreen("Congrats You Won!!!");//then display endScreen("congratsYouWon!!!")
                 } catch (IOException w) {System.out.println();}//else print error
             }
+            else if (isCorrectGuess(letter, dash)==-2){//else
+                JOptionPane.showMessageDialog(null, "You cannot guess the same letter twice try to guess another letter", "Guess Error", 0);//show message that the guess should not be a used letter
+                            }
             else {//else
-                JOptionPane.showMessageDialog(null, "Your guess should be one lowercase letter", "Guess Error", 0);//show message the the guess should be one lowercase letter
+                JOptionPane.showMessageDialog(null, "You have to guess one lowercase letter", "Guess Error", 0);//show message that the guess should be one lowercase letter
             }
+
         }
     }
 }
