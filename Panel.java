@@ -58,12 +58,25 @@ public class Panel extends JPanel {
         hangPane.add(miniPane, BorderLayout.PAGE_START);//adds Guess Letter, textbox, and Guess! button to window
         add(hangPane, BorderLayout.LINE_START);//adds hangplane/ hangman images to window
     }
+    /**
+    *Constructs a repeated string with initial string specified by ch and repeats the string with a specified int len
+    * @param ch initial string which is to be repeated
+    * @param len inital int 
+    * @author Pranav Velleth
+
+    */
     private String repeat(String ch, int len) {//takes in a string cs and an int len
         String fin = "";//setings fin = to nothing
         for (int i=0;i<len;i++)//for i =0 and the loop will go on until i is greater the len, for each loop i will increase by 1 
             fin = fin+ch;//fin equals the string given in the method
         return fin;//we return the string fin when done with the loop
     }
+    /**
+    *Chooses a random word from words.txt
+    *@author Ashwin Pulla and Pranav Velleth
+    *@return random word
+    
+    */
     private String chooseWord() throws FileNotFoundException {//settings up method , it returns a string and throws file no found exceptions
         String[] words = new String[851];//and new list is set up
         File file = new File("words.txt");//file is opened
@@ -74,12 +87,27 @@ public class Panel extends JPanel {
         scan.close();//we close the file
         return words[(int)(Math.random()*850)];//we return a random word from list
     }
+    /**
+    * Checks if intital letter specified by lettGuess is in the chosen word specified by an array d
+    *@param lettGuess initial letter guess (string)
+    *@param d initial word (array)
+    *@return -1 if letterGuess is 0, greater than one, or is not a letter
+    *@return -2 if letterGuess was used already
+    *@return 1 if lettGuess is in word
+    *@return 0 in lettGuess in not word
+    *@author Ashwin Pulla
+    
+    
+    
+    
+    */
+    
     private int isCorrectGuess(String lettGuess, String[] d) {//sets up method that return an int and takes in a string called letterGuess and a string list called d
         int rVal = 0;//sets return val to 0
         String used=usedLetts.getText();//gets used letters
         used = used.substring(used.lastIndexOf(":") + 1);//filters out the "Used Letters: " and only keeps the used letters
         
-        if (lettGuess.length()==0 || lettGuess.length()>1 || !lettGuess.matches("[a-z]+")) {//if the letter guess lenght is = o or is greater than one or is not a letter in the alphabet
+        if (lettGuess.length()==0 || lettGuess.length()>1 || !lettGuess.matches("[a-z]+")) {//if the letter guess lenght is = 0 or is greater than one or is not a letter in the alphabet
             return -1;//return -1
         }
         else if(used.contains(lettGuess)==true)//if the letter guess is in the used letters
@@ -98,6 +126,15 @@ public class Panel extends JPanel {
         guess.setText("");//set the textbox to empty so that it's easier for user to type new letter
         return rVal; //return rval
     }
+    
+    /**displays different end screens if someone won or lost
+    *@parm winOrLose a string that specifies if someone won or lost
+    *@ author Vibhav Vasudevan
+    
+    
+    
+    
+    */
     private void endScreen(String winOrLose) throws IOException {//end screen 
         String[] buttons = {"Restart", "Quit"};//set up 2 buttons restart and quit
         JPanel endPane = new JPanel();// and new panel
@@ -120,6 +157,14 @@ public class Panel extends JPanel {
             System.exit(0);//then exit
         }
     }
+    /**
+    *Displays hangman image depending on if person gets correct or incorrect answer also displays error messages if someone types the same letter twice or types a non-lowercase letter
+    *@ author Ashwin Pulla, Pranav Velleth, Vibhav Vasudevan
+    
+    
+    
+    
+    */
     private class Listener implements ActionListener {//setting up class for action listener for guess button
         public void actionPerformed(ActionEvent e) {//setting up method for action listener for guess button
             
