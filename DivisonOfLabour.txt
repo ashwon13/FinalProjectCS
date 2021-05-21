@@ -1,5 +1,0 @@
-Ashwin-comments, isCorectGuess, and bug fixes,chooseWord
-
-Vibhav-Panel and bug fixes-helped with comments
-
-Pranav- endScreen, GUI components-helped with comments
