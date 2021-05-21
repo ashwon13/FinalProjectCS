@@ -2,10 +2,7 @@ import java.awt.Color;
 import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-/**
- *Driver for hangman game. Creates panel and displays instructions
- *@author Pranav Velleleth, Ashwin Pulla, Vaibhav Vasudevan
-*/
+
 public class Driver {
    /**
    *Driver for hangman game. Creates panel and displays instructions

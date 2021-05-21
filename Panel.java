@@ -63,6 +63,7 @@ public class Panel extends JPanel {
     * @param ch initial string which is to be repeated
     * @param len inital int 
     * @author Pranav Velleth
+    * @return repeated string 
 
     */
     private String repeat(String ch, int len) {//takes in a string cs and an int len
